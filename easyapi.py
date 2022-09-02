@@ -3,11 +3,13 @@
 from datetime import datetime, timedelta
 import json, requests
 
+
 verify_ssl_cert=True
 utc_offset=None
 
 tax_stroom_ct=0.872+4.010+3.325+0.104
 tax_gas_ct=4.23+1.714+39.591+9.429
+
 
 def get_easy_data(url, ts1, ts2):
     global verify_ssl_cert
@@ -24,6 +26,7 @@ def get_easy_data(url, ts1, ts2):
         assert d['SupplierId']==0
         yield d
 
+
 def gas_data(ts1, ts2):
     url='https://mijn.easyenergy.com/nl/api/tariff/getlebatariffs'
     last_tarrif = None
@@ -34,6 +37,7 @@ def gas_data(ts1, ts2):
             yield ts, tarrif
             last_tarrif = tarrif
 
+
 def stroom_data(ts1, ts2):
     url='https://mijn.easyenergy.com/nl/api/tariff/getapxtariffs'
 
@@ -41,13 +45,14 @@ def stroom_data(ts1, ts2):
         ts, tarrif = d['Timestamp'], d['TariffUsage']
         yield ts, tarrif
 
-def pretty_ts(ts):
 
+def pretty_ts(ts):
     global utc_offset
 
     utc=datetime.strptime(ts, '%Y-%m-%dT%H:%M:%S+00:00')
     local=utc+utc_offset
     return local.strftime('%d %b  %H:%M')
+
 
 def main():
     global utc_offset
@@ -57,7 +62,7 @@ def main():
     if utc_offset == None:
         utc_offset = now - datetime.utcfromtimestamp(now.timestamp())
 
-    if now.hour< 6:
+    if now.hour < 6:
         utc_gas = now.replace(hour=0) - utc_offset
     else:
         utc_gas = now.replace(hour=6) - utc_offset
