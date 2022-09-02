@@ -7,8 +7,9 @@ import json, requests
 verify_ssl_cert=True
 utc_offset=None
 
-tax_stroom_ct=0.872+4.010+3.325+0.104
-tax_gas_ct=4.23+1.714+39.591+9.429
+# https://www.easyenergy.com/nl/energietarieven
+tax_stroom_ct = 0.872 + 4.010 + 3.325 + 0.104
+tax_gas_ct = 4.23 + 1.714 + 39.591 + 9.429
 
 
 def get_easy_data(url, ts1, ts2):
