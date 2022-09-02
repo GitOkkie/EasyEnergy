@@ -57,8 +57,12 @@ def main():
     if utc_offset == None:
         utc_offset = now - datetime.utcfromtimestamp(now.timestamp())
 
+    if now.hour< 6:
+        utc_gas = now.replace(hour=0) - utc_offset
+    else:
+        utc_gas = now.replace(hour=6) - utc_offset
+
     utc_stroom  = now - utc_offset
-    utc_gas = now.replace(hour=0) - utc_offset
     utc_end = now + timedelta(hours=48) - utc_offset
 
     print('Gas')
