@@ -8,7 +8,7 @@ $EASYAPI=/usr/local/bin/easyapi.py
 
 cd $DOCROOT || exit 1
 
-$EASYAPI > ee.new 
+$EASYAPI > ee.new || exit 2
 
 # crontab mailt me als er nieuwe data is
 diff -u ee.txt ee.new | grep ^+[^+]

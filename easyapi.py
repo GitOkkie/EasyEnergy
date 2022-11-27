@@ -19,7 +19,12 @@ def get_easy_data(url, ts1, ts2):
     ts_end = ts2.isoformat()+'Z'
 
     html=requests.get(url, params={'startTimestamp': ts_start, 'endTimestamp': ts_end} , verify=verify_ssl_cert)
-    data=json.loads(html.content)
+    try:
+        data=json.loads(html.content)
+    except Exception as e:
+        from sys import stderr
+        print(html.status_code, html.content, file=stderr)
+        raise e
 
     for d in data:
         assert len(d.keys())==4
